@@ -25,4 +25,8 @@ public class Event {
                 ", timestamp=" + new Timestamp(timestamp) +
                 '}';
     }
+
+    public static void main(String[] args) {
+        System.out.println("ddddddd");
+    }
 }
