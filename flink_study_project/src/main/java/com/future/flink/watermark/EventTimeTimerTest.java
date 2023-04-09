@@ -8,6 +8,9 @@ import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.util.Collector;
 
+/**
+ * 基于EventTime的定时间测试
+ */
 public class EventTimeTimerTest {
 
     // Event 是自定义的一个数据源

@@ -18,6 +18,9 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 
+/**
+ * 基于Process时间的All Window的使用案例，求top
+ */
 public class ProcessAllWindowTop {
 
     public static void main(String[] args) throws Exception{
