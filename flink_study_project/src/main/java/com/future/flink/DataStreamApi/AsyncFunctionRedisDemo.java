@@ -1,8 +1,9 @@
 package com.future.flink.DataStreamApi;
 
 
-import org.apache.flink.api.java.tuple.Tuple3;
+import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.configuration.Configuration;
+import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.functions.async.ResultFuture;
 import org.apache.flink.streaming.api.functions.async.RichAsyncFunction;
 import redis.clients.jedis.Jedis;
@@ -21,7 +22,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import java.util.concurrent.TimeUnit;
 
 /**
- *  异步IO操作实例
+ *  基于Redis的异步IO操作实例
  *     orderedWait（有序）：消息的发送顺序与接收到的顺序相同（包括 watermark ），也就是先进先出。
  *     unorderWait（无序）：
  *        在ProcessingTime中完全无序，即哪个请求先返回结果就先发送(最低延迟和最低消耗)
@@ -30,14 +31,14 @@ import java.util.concurrent.TimeUnit;
  *       1、https://blog.csdn.net/weixin_51329630/article/details/118657221
  *       2、https://zhuanlan.zhihu.com/p/268898593
  */
-public class AsyncFunctionDemo {
+public class AsyncFunctionRedisDemo {
 
     public static void main(String[] args) throws Exception {
         // 1. 初始化流计算运行环境
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         // 2. 从文件读取数据
         DataStreamSource<String> inputStream = getDataSource(env);
-        // 3. 异步操作：通过AsyncDataStream类来异步查询redis，有orderedWait（有序） 和 unorderedWait两个方法（无序）。
+        // 4.应用异步 I/O 转换操作，不启用重试，有orderedWait（有序） 和 unorderedWait两个方法（无序）。
         SingleOutputStreamOperator<String> resultDataStream = AsyncDataStream.orderedWait(
                 inputStream, // DataStream
                 new AsyncReadRedis(), // AsyncFunctionsh实现类
@@ -68,7 +69,7 @@ public class AsyncFunctionDemo {
     }
 
     /**
-     * 一个异步连接redis的 AsyncFunction
+     * 3、创建一个异步连接redis的 AsyncFunction
      */
     public static class AsyncReadRedis extends RichAsyncFunction<String, String> {
         // Jedis 连接池对象
@@ -76,6 +77,11 @@ public class AsyncFunctionDemo {
         // Jedis 对象
         private Jedis jedis = null ;
 
+        /**
+         * 3.1 利用open方法初始化支持异步操作的数据库客户端 或者 连接池
+         * @param parameters
+         * @throws Exception
+         */
         @Override
         public void open(Configuration parameters) throws Exception {
             jedisPool = new JedisPool(
@@ -87,6 +93,12 @@ public class AsyncFunctionDemo {
             jedis = jedisPool.getResource() ;
         }
 
+        /**
+         * 3.2 实现异步操作——通过重写 asyncInvoke 方法
+         * @param input
+         * @param resultFuture
+         * @throws Exception
+         */
         @Override
         public void asyncInvoke(String input, ResultFuture<String> resultFuture) throws Exception {
             System.out.println("Input: " + input);
@@ -107,6 +119,12 @@ public class AsyncFunctionDemo {
             });
         }
 
+        // 3.3 超时异常处理——通过重写 timeout 方法,没有重新代表使用默认
+
+        /**
+         * 3.4 重写close方法来关闭客户端链接
+         * @throws Exception
+         */
         @Override
         public void close() throws Exception {
              // 关闭Jedis连接

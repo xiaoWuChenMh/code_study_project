@@ -1,4 +1,5 @@
-package tool.str;
+package com.future.common.str;
+
 
 import java.io.*;
 
@@ -115,4 +116,5 @@ public class Encode {
         }
         return null;
     }
+
 }

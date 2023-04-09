@@ -1,4 +1,5 @@
-package tool.http;
+package com.future.common.http;
+
 
 import net.sf.json.JSONObject;
 import org.apache.http.HttpEntity;
@@ -31,7 +32,7 @@ public class HttpRequestTest {
     private static final int SUCCESS_CODE = 200;
 
     public static void main(String[] args) {
-        String url  ="https://xxxxxxxxxx;
+        String url  ="https://xxxxxxxxxx";
         List<NameValuePair> parame = new ArrayList<NameValuePair>();
         parame.add(new BasicNameValuePair("uid", "111111111111111111111111111"));
         JSONObject jsonObject = http_get(url,parame);
