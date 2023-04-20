@@ -1,4 +1,4 @@
-package tool.http;
+package com.future.common.http;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.*;
