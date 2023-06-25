@@ -1,0 +1,19 @@
+server:
+  port: 80
+  servlet:
+    contextPath: /
+    session:
+      timeout: 2592000
+  datasource:
+    url: jdbc:mysql://101.200.158.44:3306/chatgpt?useSSL=false&characterEncoding=UTF-8
+    username: root
+    password: chatgpt123
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      filters: stat,wall,slf4j,config
+      initialSize: 1
+      maxActive: 9
+      statViewServlet:
+        loginUsername: druid
+        loginPassword: chatgpt_druid
