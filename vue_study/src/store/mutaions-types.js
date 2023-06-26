@@ -1,0 +1,6 @@
+export const INCREMENT = 'increment'
+export const DECREMENT = 'decrement'
+export const INCREMENT_COUNT = 'incrementCount'
+export const INCREMENT_COUNT_STYLE = 'incrementCountStyle'
+export const ADD_STATE = 'addState'
+export const DELETE_STATE= 'deleteState'
