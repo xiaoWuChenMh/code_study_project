@@ -1,32 +1,41 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <h2>------------ 获取状态信息-------------------</h2>
+    <h2>{{$store.state.counter}}}</h2>
+
+    <h2>------------ mutations相关信息-------------------</h2>
+    <button @click="increment">+</button>
+    <button @click="decrement">-</button>
+
+
+    <h2>------------ getters相关信息-------------------</h2>
+    <h2>{{$store.getters.powerCounter}}}</h2>
+    <h2>{{$store.getters.powerCounter}}</h2>
+    <h2>{{$store.getters.more20stu}}</h2>
+    <h2>{{$store.getters.more20stuLength}}</h2>
+    <h2>{{$store.getters.moreAgeStu(12)}}</h2>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+  export default {
+    name:'App',
+    data() {
+      return {
+        message:'我是App组件',
+        counter: 0
+      }
+    },
+    methods:{
+      increment: function () {
+        // commit（）用于调用mutations对象里的函数。
+        this.$store.commit('increment')
+      },
+      decrement: function () {
+        this.$store.commit('decrement')
+      }
     }
   }
-}
+</script>
+<style>
 </style>
