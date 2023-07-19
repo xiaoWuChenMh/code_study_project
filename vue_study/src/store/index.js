@@ -30,7 +30,7 @@ export default new Vuex.Store({
     // getters内的函数接受外部传参,不能直接接受参数，但可以返回一个函数，然后让被返回的函数接受参数
     moreAgeStu(state){
       return function (age) {
-        return stete.students.filter(s => s.age>age)
+        return state.students.filter(s => s.age>age)
       }
       // 可以改写为箭头函数
       // return age => {

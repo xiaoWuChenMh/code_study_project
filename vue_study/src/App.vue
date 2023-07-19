@@ -1,41 +1,55 @@
 <template>
-  <div id="app">
-    <h2>------------ 获取状态信息-------------------</h2>
-    <h2>{{$store.state.counter}}}</h2>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <div class="d-flex align-center">
+        <v-img
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          transition="scale-transition"
+          width="40"
+        />
 
-    <h2>------------ mutations相关信息-------------------</h2>
-    <button @click="increment">+</button>
-    <button @click="decrement">-</button>
+        <v-img
+          alt="Vuetify Name"
+          class="shrink mt-1 hidden-sm-and-down"
+          contain
+          min-width="100"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
+          width="100"
+        />
+      </div>
 
+      <v-spacer></v-spacer>
 
-    <h2>------------ getters相关信息-------------------</h2>
-    <h2>{{$store.getters.powerCounter}}}</h2>
-    <h2>{{$store.getters.powerCounter}}</h2>
-    <h2>{{$store.getters.more20stu}}</h2>
-    <h2>{{$store.getters.more20stuLength}}</h2>
-    <h2>{{$store.getters.moreAgeStu(12)}}</h2>
-  </div>
+      <v-btn
+        href="https://github.com/vuetifyjs/vuetify/releases/latest"
+        target="_blank"
+        text
+      >
+        <span class="mr-2">Latest Release</span>
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-  export default {
-    name:'App',
-    data() {
-      return {
-        message:'我是App组件',
-        counter: 0
-      }
-    },
-    methods:{
-      increment: function () {
-        // commit（）用于调用mutations对象里的函数。
-        this.$store.commit('increment')
-      },
-      decrement: function () {
-        this.$store.commit('decrement')
-      }
-    }
-  }
+
+export default {
+  name: 'App',
+
+  data: () => ({
+    //
+  }),
+};
 </script>
-<style>
-</style>
