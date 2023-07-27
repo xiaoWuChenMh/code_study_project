@@ -33,7 +33,7 @@ public class ClassAnalyzer {
     public static void main(String[] args) {
 
         // 给定一个类的源代码文件路径
-        String filePath = "E:\\workspace\\IntelliJIDEA\\study\\code_study_project\\common_study_project\\src\\main\\java\\com\\future\\common\\util\\ClassAnalyzer.java";
+        String filePath = "E:\\workspace\\IntelliJIDEA\\yuanma\\spark-source_code_read\\core\\src\\main\\java\\org\\apache\\spark\\memory\\TaskMemoryManager.java";
 
         try {
             // 读取Java源代码文件
@@ -108,7 +108,8 @@ public class ClassAnalyzer {
         List<MethodDeclaration> methods = cu.getTypes().get(0).getMethods();
         System.out.println("Methods:");
         for (MethodDeclaration method : methods) {
-            String methodCode = method.toString().replaceAll("\\s+", " ");;
+            String methodCode = method.toString().replaceAll("\\s+", " ");
+                    //.replaceAll("\"","\\\\\"");
             result.add(methodCode);
         }
         return result;
