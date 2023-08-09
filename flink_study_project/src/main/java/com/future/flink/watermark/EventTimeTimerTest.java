@@ -1,5 +1,6 @@
 package com.future.flink.watermark;
 
+import com.future.flink.DataSource.CustomEventSource;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
@@ -18,7 +19,7 @@ public class EventTimeTimerTest {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
         // 接入source数据
-        SingleOutputStreamOperator<Event> stream = env.addSource(new CustomSource())
+        SingleOutputStreamOperator<Event> stream = env.addSource(new CustomEventSource())
                 .assignTimestampsAndWatermarks(
                         // 注册flink内置的顺序流的watermark生成器
                         WatermarkStrategy.<Event>forMonotonousTimestamps()
@@ -49,30 +50,6 @@ public class EventTimeTimerTest {
                 })
                 .print();
         env.execute();
-    }
-
-    /**
-     * 自定义测试数数据源
-     */
-    public static class CustomSource implements SourceFunction<Event> {
-
-        @Override
-        public void run(SourceContext<Event> sourceContext) throws Exception {
-            // 向flink的source发送一条测试数据
-            sourceContext.collect(new Event("Mary", "./home", 1000L));
-            Thread.sleep(10000L);
-            // 发出10秒后的数据
-            sourceContext.collect(new Event("Mary", "./home", 11000L));
-            Thread.sleep(1000L);
-            //发出10秒+1ms后的数据
-            sourceContext.collect(new Event("Alice", "./cart", 11001L));
-            Thread.sleep(5000L);
-        }
-
-        @Override
-        public void cancel() {
-
-        }
     }
 
 

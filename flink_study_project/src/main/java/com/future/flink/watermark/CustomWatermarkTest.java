@@ -1,5 +1,6 @@
 package com.future.flink.watermark;
 
+import com.future.flink.DataSource.CustomEventSource;
 import org.apache.flink.api.common.eventtime.*;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
@@ -13,7 +14,7 @@ public class CustomWatermarkTest {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
-        env.addSource(new CustomSource())
+        env.addSource(new CustomEventSource())
                 .assignTimestampsAndWatermarks(new CustomWatermarkStrategy())
                 .print();
 
@@ -69,28 +70,5 @@ public class CustomWatermarkTest {
         }
     }
 
-    /**
-     * 自定义测试数数据源
-     */
-    public static class CustomSource implements SourceFunction<Event> {
-
-        @Override
-        public void run(SourceContext<Event> sourceContext) throws Exception {
-            // 向flink的source发送一条测试数据
-            sourceContext.collect(new Event("Mary", "./home", 1000L));
-            Thread.sleep(5000L);
-            // 发出5秒后的数据
-            sourceContext.collect(new Event("Mary", "./home", 6000L));
-            Thread.sleep(5000L);
-            //发出10秒后的数据
-            sourceContext.collect(new Event("Alice", "./cart", 11000L));
-            Thread.sleep(5000L);
-        }
-
-        @Override
-        public void cancel() {
-
-        }
-    }
 
 }

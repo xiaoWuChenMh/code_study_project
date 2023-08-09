@@ -5,13 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+
+import com.future.flink.DataSource.ClickSource;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.streaming.api.functions.windowing.ProcessAllWindowFunction;
 import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
@@ -96,30 +97,4 @@ public class ProcessAllWindowTop {
 
     }
 
-    public static class ClickSource implements SourceFunction<Event> {
-
-        @Override
-        public void run(SourceContext<Event> sourceContext) throws Exception {
-            System.out.println("开始生成数据：" + new Timestamp(System.currentTimeMillis()));
-            sourceContext.collect(new Event("Mary", "./home", System.currentTimeMillis()));
-            sourceContext.collect(new Event("Alice", "./cart", System.currentTimeMillis()));
-            Thread.sleep(1200L);
-            sourceContext.collect(new Event("Alice", "./cart", System.currentTimeMillis()+1200L));
-            Thread.sleep(100L);
-            sourceContext.collect(new Event("Mary", "./home", System.currentTimeMillis()+100L));
-            Thread.sleep(1200L);
-            sourceContext.collect(new Event("Alice", "./cart", System.currentTimeMillis()+1200L));
-            sourceContext.collect(new Event("Alice", "./zzzzd", System.currentTimeMillis()+1200L));
-            sourceContext.collect(new Event("Mary", "./lild", System.currentTimeMillis()+1200L));
-            Thread.sleep(4200L);
-            sourceContext.collect(new Event("Alice", "./cmd", System.currentTimeMillis()+4200L));
-            sourceContext.collect(new Event("Alice", "./cbd", System.currentTimeMillis()+4200L));
-            System.out.println("结束生成数据：" + new Timestamp(System.currentTimeMillis()));
-        }
-
-        @Override
-        public void cancel() {
-
-        }
-    }
 }
