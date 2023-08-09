@@ -61,6 +61,12 @@
             <artifactId>javaparser-core</artifactId>
             <version>3.24.0</version>
         </dependency>
+        <!--  ===================Scala语法分析库,用于解析源码====================-->
+        <dependency>
+            <groupId>org.scala-lang.modules</groupId>
+            <artifactId>scala-parser-combinators_2.13</artifactId>
+            <version>1.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>

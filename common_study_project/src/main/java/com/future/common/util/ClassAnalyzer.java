@@ -33,7 +33,7 @@ public class ClassAnalyzer {
     public static void main(String[] args) {
 
         // 给定一个类的源代码文件路径
-        String filePath = "E:\\workspace\\IntelliJIDEA\\yuanma\\spark-source_code_read\\core\\src\\main\\java\\org\\apache\\spark\\memory\\TaskMemoryManager.java";
+        String filePath = "E:\\workspace\\IntelliJIDEA\\yuanma\\spark-source_code_read\\core\\src\\main\\scala\\org\\apache\\spark\\memory\\MemoryPool.scala";
 
         try {
             // 读取Java源代码文件
