@@ -1,6 +1,5 @@
 package com.future.flink.DataSource;
 
-import com.future.flink.watermark.Event;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
 import java.sql.Timestamp;

@@ -1,4 +1,4 @@
-package com.future.flink.watermark;
+package com.future.flink.DataSource;
 
 import java.sql.Timestamp;
 
@@ -23,6 +23,7 @@ public class Event {
                 "user='" + user + '\'' +
                 ", url='" + url + '\'' +
                 ", timestamp=" + new Timestamp(timestamp) +
+                ", timestamp_long=" + timestamp +
                 '}';
     }
 

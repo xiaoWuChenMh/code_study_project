@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import com.future.flink.DataSource.ClickSource;
+import com.future.flink.DataSource.Event;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.MapFunction;

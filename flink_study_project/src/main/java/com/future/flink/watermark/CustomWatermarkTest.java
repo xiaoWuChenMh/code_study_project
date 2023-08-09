@@ -1,9 +1,9 @@
 package com.future.flink.watermark;
 
 import com.future.flink.DataSource.CustomEventSource;
+import com.future.flink.DataSource.Event;
 import org.apache.flink.api.common.eventtime.*;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
 /**
  * @Description 自定义 周期性水位线生成器（Periodic Generator）
