@@ -9,7 +9,7 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction;
 import org.apache.flink.util.Collector;
 
 /**
- * 基于EventTime的定时间测试
+ * 基于EventTime的定时器测试,也包含了有序流watermark生成器的测试
  */
 public class EventTimeTimerTest {
 
@@ -17,15 +17,18 @@ public class EventTimeTimerTest {
     public static void main(String[] args) throws Exception {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
-        // 接入source数据，并注册flink内置的顺序流的watermark生成器
+        // 接入source数据
         SingleOutputStreamOperator<Event> stream = env.addSource(new CustomSource())
-                .assignTimestampsAndWatermarks(WatermarkStrategy.<Event>forMonotonousTimestamps()
-                        .withTimestampAssigner(new SerializableTimestampAssigner<Event>() {
-                            @Override
-                            public long extractTimestamp(Event element, long recordTimestamp) {
-                                return element.timestamp;
-                            }
-                        }));
+                .assignTimestampsAndWatermarks(
+                        // 注册flink内置的顺序流的watermark生成器
+                        WatermarkStrategy.<Event>forMonotonousTimestamps()
+                           .withTimestampAssigner(new SerializableTimestampAssigner<Event>() {
+                               @Override
+                               public long extractTimestamp(Event element, long recordTimestamp) {
+                                   return element.timestamp;
+                               }
+                           })
+                );
         //基于keyedStream 定义事件事件定时器
         stream.keyBy(data -> true)  // data -> true 所有数据分到同一分区
                 .process(new KeyedProcessFunction<Boolean, Event, Object>() {
@@ -57,10 +60,10 @@ public class EventTimeTimerTest {
         public void run(SourceContext<Event> sourceContext) throws Exception {
             // 向flink的source发送一条测试数据
             sourceContext.collect(new Event("Mary", "./home", 1000L));
-            Thread.sleep(5000L);
+            Thread.sleep(10000L);
             // 发出10秒后的数据
             sourceContext.collect(new Event("Mary", "./home", 11000L));
-            Thread.sleep(5000L);
+            Thread.sleep(1000L);
             //发出10秒+1ms后的数据
             sourceContext.collect(new Event("Alice", "./cart", 11001L));
             Thread.sleep(5000L);

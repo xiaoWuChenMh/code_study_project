@@ -27,14 +27,17 @@ public class ProcessAllWindowTop {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
         SingleOutputStreamOperator<Event> eventStream = env.addSource(new ClickSource())
-                .assignTimestampsAndWatermarks(WatermarkStrategy.<Event>forMonotonousTimestamps()
-                .withTimestampAssigner(new SerializableTimestampAssigner<Event>() {
-                    @Override
-                    public long extractTimestamp(Event event, long l) {
-                        System.out.println("获取数据时间：" + new Timestamp(event.timestamp));
-                        return event.timestamp;
-                    }
-                }));
+                .assignTimestampsAndWatermarks(
+                        // WatermarkStrategy内置——有序流watermark生成器
+                        WatermarkStrategy.<Event>forMonotonousTimestamps()
+                                .withTimestampAssigner(new SerializableTimestampAssigner<Event>() {
+                                    @Override
+                                    public long extractTimestamp(Event event, long l) {
+                                        System.out.println("获取数据时间：" + new Timestamp(event.timestamp));
+                                        return event.timestamp;
+                                    }
+                                })
+                );
         // 只需要 url 就可以统计数量，所以转换成 String 直接开窗统计
         SingleOutputStreamOperator<String> result = eventStream
                 .map(new MapFunction<Event, String>() {
