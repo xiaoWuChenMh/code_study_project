@@ -1,5 +1,6 @@
 package com.future.flink.Windwos;
 
+import com.future.flink.Windwos.watermark.MyWatermarkTest;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.ReduceFunction;
@@ -33,16 +34,7 @@ public class ReduceFuntionWindowsOfNumberTest {
         SingleOutputStreamOperator<Tuple3<String,Integer,Long>> eventStream = env.addSource(new reduceFunctionNumberSource());
 
         // 注册watermark：内置的乱序流生成器，延迟时间设置为5s
-        eventStream = eventStream.assignTimestampsAndWatermarks(
-                WatermarkStrategy.<Tuple3<String,Integer,Long>>forBoundedOutOfOrderness(Duration.ofSeconds(1))
-                        .withTimestampAssigner(new SerializableTimestampAssigner<Tuple3<String,Integer,Long>>() {
-                            @Override
-                            public long extractTimestamp(Tuple3<String,Integer,Long> element, long recordTimestamp) {
-                                return element.f2;
-//                                return System.currentTimeMillis();
-                            }
-                        })
-        );
+        eventStream = eventStream.assignTimestampsAndWatermarks(new MyWatermarkTest());
 
 
         // 对数据流进行分组
@@ -72,26 +64,29 @@ public class ReduceFuntionWindowsOfNumberTest {
             System.out.println(new Timestamp(currTime));
             sourceContext.collect(new Tuple3("c",1,currTime));
 
+            Thread.sleep(4000L);
             // 模拟：4秒后发生的事件
             Long time1 = currTime+4000L;
             System.out.println(new Timestamp(time1));
             sourceContext.collect(new Tuple3("b",1,time1));
             sourceContext.collect(new Tuple3("a",1,time1));
 
+            Thread.sleep(1000L);
             // 模拟：1秒后发生的事件
             Long time2 = time1+1000L;
             System.out.println(new Timestamp(time2));
             sourceContext.collect(new Tuple3("a",1,time1));
 
-            // 模拟：6秒后发生的事件
-            Long time3 = time2+6000L;
+            Thread.sleep(5000L);
+            // 模拟：6秒后发生的事件,等5秒的时候有时会把c4累计到c1上，为什么，我的窗口是5秒且延时1秒？？？
+            Long time3 = time2+5000L;
             System.out.println(new Timestamp(time3));
             sourceContext.collect(new Tuple3("b",1,time3));
             sourceContext.collect(new Tuple3("a",1,time3));
             sourceContext.collect(new Tuple3("b",1,time3));
             sourceContext.collect(new Tuple3("a",1,time3));
-//            sourceContext.collect(new Tuple3("c",4,currTime));
-//            sourceContext.collect(new Tuple3("c",2,time3));
+            sourceContext.collect(new Tuple3("c",4,currTime));
+            sourceContext.collect(new Tuple3("c",2,time3));
             // 測試还是不行，不能将数据按窗口完美的分割开，需要自定义一个WaterMark试一试
         }
 
