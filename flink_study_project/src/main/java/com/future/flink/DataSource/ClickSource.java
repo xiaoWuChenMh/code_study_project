@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 /**
  * @Description
- * @Author v_hhuima
+ * @Author hma
  * @Date 2023/8/9 16:30
  */
 public class ClickSource implements SourceFunction<Event> {
@@ -17,16 +17,19 @@ public class ClickSource implements SourceFunction<Event> {
         sourceContext.collect(new Event("Mary", "./home", System.currentTimeMillis()));
         sourceContext.collect(new Event("Alice", "./cart", System.currentTimeMillis()));
         Thread.sleep(1200L);
-        sourceContext.collect(new Event("Alice", "./cart", System.currentTimeMillis()+1200L));
+        sourceContext.collect(new Event("Alice", "./cart", System.currentTimeMillis()));
         Thread.sleep(100L);
-        sourceContext.collect(new Event("Mary", "./home", System.currentTimeMillis()+100L));
+        sourceContext.collect(new Event("Mary", "./home", System.currentTimeMillis()));
         Thread.sleep(1200L);
-        sourceContext.collect(new Event("Alice", "./cart", System.currentTimeMillis()+1200L));
-        sourceContext.collect(new Event("Alice", "./zzzzd", System.currentTimeMillis()+1200L));
-        sourceContext.collect(new Event("Mary", "./lild", System.currentTimeMillis()+1200L));
+        sourceContext.collect(new Event("Alice", "./cart", System.currentTimeMillis()));
+        sourceContext.collect(new Event("Alice", "./zzzzd", System.currentTimeMillis()));
+        sourceContext.collect(new Event("Mary", "./lild", System.currentTimeMillis()));
         Thread.sleep(4200L);
-        sourceContext.collect(new Event("Alice", "./cmd", System.currentTimeMillis()+4200L));
-        sourceContext.collect(new Event("Alice", "./cbd", System.currentTimeMillis()+4200L));
+        sourceContext.collect(new Event("Alice", "./cmd", System.currentTimeMillis()));
+        sourceContext.collect(new Event("Alice", "./cbd", System.currentTimeMillis()));
+        Thread.sleep(5000L);
+        sourceContext.collect(new Event("Alice", "./cmd", System.currentTimeMillis()));
+        sourceContext.collect(new Event("Alice", "./cbd", System.currentTimeMillis()));
         System.out.println("结束生成数据：" + new Timestamp(System.currentTimeMillis()));
     }
 

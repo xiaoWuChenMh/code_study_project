@@ -7,7 +7,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 /**
  * @Description 自定义 周期性水位线生成器（Periodic Generator）
- * @Author v_hhuima
+ * @Author hma
  * @Date 2023/8/9 15:53
  */
 public class CustomWatermarkTest {

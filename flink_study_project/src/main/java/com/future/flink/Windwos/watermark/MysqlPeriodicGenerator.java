@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 
 /**
  * @Description
- * @Author v_hhuima
+ * @Author hma
  * @Date 2023/8/11 19:20
  */
 public class MysqlPeriodicGenerator implements WatermarkGenerator<Tuple3<String,Integer,Long>> {

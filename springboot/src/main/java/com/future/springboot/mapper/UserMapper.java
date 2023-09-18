@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Param;
  *  Service CRUD 接口:https://baomidou.com/pages/49cc81/
  *  条件构造器： https://baomidou.com/pages/10c804/
  * </p>
- * @Author v_hhuima
+ * @Author hma
  * @Date 2023/6/8 15:17
  */
 public interface UserMapper extends BaseMapper<UserDO> {

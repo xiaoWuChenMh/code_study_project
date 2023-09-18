@@ -4,7 +4,7 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
 /**
  * @Description
- * @Author v_hhuima
+ * @Author hma
  * @Date 2023/8/9 16:28
  */
 public class CustomEventSource implements SourceFunction<Event>{

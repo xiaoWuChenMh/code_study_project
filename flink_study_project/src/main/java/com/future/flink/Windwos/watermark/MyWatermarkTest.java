@@ -7,7 +7,7 @@ import org.apache.flink.api.java.tuple.Tuple3;
 
 /**
  * @Description
- * @Author v_hhuima
+ * @Author hma
  * @Date 2023/8/11 19:17
  */
 public class MyWatermarkTest implements WatermarkStrategy<Tuple3<String,Integer,Long>>{

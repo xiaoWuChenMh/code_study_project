@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 /**
  * @Description UserDO.java
- * @Author v_hhuima
+ * @Author hma
  * @Date 2023/6/8 15:17
  */
 @TableName("t_user")

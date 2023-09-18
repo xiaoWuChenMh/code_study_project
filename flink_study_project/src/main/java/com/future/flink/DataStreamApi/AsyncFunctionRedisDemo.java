@@ -102,8 +102,8 @@ public class AsyncFunctionRedisDemo {
         @Override
         public void asyncInvoke(String input, ResultFuture<String> resultFuture) throws Exception {
             System.out.println("Input: " + input);
-              // 发起异步请求，返回结果Future
-            CompletableFuture.supplyAsync(new Supplier<String>() {
+              // 使用CompletableFuture发起异步请求，返回结果Future
+            CompletableFuture<String> future =CompletableFuture.supplyAsync(new Supplier<String>() {
                 @Override
                 public String get() {
                     // 数据样本：1,beijing
@@ -113,8 +113,10 @@ public class AsyncFunctionRedisDemo {
                     System.out.println("Output: " + reply);
                     return reply;
                 }
-            }).thenAccept((String dbResult) -> {
-               // 设置请求完成时的回调：将结果传递给collector
+            });
+            // 注册回调函数，在请求完成后处理结果
+            future.thenAccept((String dbResult) -> {
+               // 发送结果给下游算子
                 resultFuture.complete(Collections.singleton(dbResult));
             });
         }

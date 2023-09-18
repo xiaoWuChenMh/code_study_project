@@ -35,7 +35,7 @@ public class ProcessAllWindowTop {
                                 .withTimestampAssigner(new SerializableTimestampAssigner<Event>() {
                                     @Override
                                     public long extractTimestamp(Event event, long l) {
-                                        System.out.println("获取数据时间：" + new Timestamp(event.timestamp));
+                                        System.out.println("获取数据时间：" + new Timestamp(event.timestamp)+";数据："+event.toString());
                                         return event.timestamp;
                                     }
                                 })
@@ -84,8 +84,9 @@ public class ProcessAllWindowTop {
                             String info = "浏览量 No." + (i + 1) +
                                     " url：" + temp.f0 +
                                     " 浏览量：" + temp.f1 +
-                                    " 窗 口 结 束 时 间 ： " + new
-                                    Timestamp(context.window().getEnd())+" 当前水位线"+"\n";
+                                    " 窗 口 开 始 时 间 ： " + new Timestamp(context.window().getStart())+
+                                    " 窗 口 结 束 时 间 ： " + new Timestamp(context.window().getEnd())+
+                                    "\n";
                             result.append(info);
                         }
                         result.append("========================================\n");
