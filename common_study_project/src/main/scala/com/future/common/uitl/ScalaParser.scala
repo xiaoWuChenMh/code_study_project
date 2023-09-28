@@ -9,7 +9,7 @@ import scala.meta._
   */
 object ScalaParser {
   def main(args: Array[String]): Unit = {
-    val code = scala.io.Source.fromFile("E:\\workspace\\IntelliJIDEA\\yuanma\\spark-source_code_read\\core\\src\\main\\scala\\org\\apache\\spark\\memory\\MemoryManager.scala").mkString
+    val code = scala.io.Source.fromFile("E:\\workspace\\IntelliJIDEA\\yuanma\\spark-source_code_read\\core\\src\\main\\scala\\org\\apache\\spark\\memory\\StaticMemoryManager.scala").mkString
     val parsedCode  = code.parse[Source]
 
     parsedCode match {
@@ -18,9 +18,18 @@ object ScalaParser {
           case c: Defn.Class =>
             println(s"Class: ${c.name.value}")
             c.templ.stats.foreach {
-              case d: Defn.Def => println(s"  Method: ${d}")
-              case v: Defn.Val => println(s"  Val: ${v}")
-              case v: Defn.Var => println(s"  Var: ${v}")
+              case d: Defn.Def => {
+                val dstr = d.toString.replaceAll("\\s+", " ")
+                println(s"  Method: ${dstr}")
+              }
+              case v: Defn.Val => {
+                val dstr = v.toString.replaceAll("\\s+", " ")
+                println(s"  Val: ${dstr}")
+              }
+              case v: Defn.Var => {
+                val dstr = v.toString.replaceAll("\\s+", " ")
+                println(s"  Var: ${dstr}")
+              }
               case _ =>
             }
             c.mods.foreach {
@@ -31,9 +40,18 @@ object ScalaParser {
           case o: Defn.Object =>
             println(s"Object: ${o.name.value}")
             o.templ.stats.foreach {
-              case d: Defn.Def => println(s"  Method: ${d.name.value}")
-              case v: Defn.Val => println(s"  Val: ${v.pats.mkString(", ")}")
-              case v: Defn.Var => println(s"  Var: ${v.pats.mkString(", ")}")
+              case d: Defn.Def => {
+               val dstr = d.toString.replaceAll("\\s+", " ")
+                println(s"  Method: ${dstr}")
+              }
+              case v: Defn.Val => {
+                val dstr = v.toString.replaceAll("\\s+", " ")
+                println(s"  Val: ${dstr}")
+              }
+              case v: Defn.Var => {
+                val dstr = v.toString.replaceAll("\\s+", " ")
+                println(s"  Var: ${dstr}")
+              }
               case _ =>
             }
             o.mods.foreach {

@@ -5,8 +5,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +32,47 @@ public class ClassAnalyzer {
     public static void main(String[] args) {
 
         // 给定一个类的源代码文件路径
-        String filePath = "E:\\workspace\\IntelliJIDEA\\yuanma\\spark-source_code_read\\core\\src\\main\\scala\\org\\apache\\spark\\memory\\MemoryPool.scala";
+        String filePath = "E:\\workspace\\IntelliJIDEA\\yuanma\\spark-source_code_read\\core\\src\\main\\java\\org\\apache\\spark\\memory\\";
+
+        String fileName = "TaskMemoryManager.java";
+
+//        lineReadFile(filePath,fileName);
+
+        parseClassFile(filePath,fileName);
+
+    }
+
+    /*
+    * @Description: 按行读取文件
+    * @Author: hma
+    * @Date: 2023/9/24 15:53
+    * @Param: [filePath]
+    * @return: void
+    */
+    private static void lineReadFile(String filePath,String fileName){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filePath+fileName));
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    * @Description: 解析Class文件，分别输出类属性和方法
+    * @Author: hma
+    * @Date: 2023/9/24 15:50
+    * @Param: [file]
+    * @return: void
+    */
+    private static void parseClassFile(String filePath,String fileName){
 
         try {
             // 读取Java源代码文件
-            File file = new File(filePath);
+            File file = new File(filePath+fileName);
 
             // 解析源代码文件
             CompilationUnit cu = StaticJavaParser.parse(file);
@@ -66,12 +101,12 @@ public class ClassAnalyzer {
 
     /*
     * @Description: 获取类名，包含包名
-    * @Author: huima
+    * @Author: hma
     * @Date: 2023/7/19 19:42
     * @Param: [cu]
     * @return: java.lang.String
     */
-    public static String getClasName(CompilationUnit cu){
+    private static String getClasName(CompilationUnit cu){
         String packageName = cu.getPackageDeclaration().get().getNameAsString();
         String className = cu.getTypes().get(0).getNameAsString();
         return packageName+"."+className;
@@ -79,12 +114,12 @@ public class ClassAnalyzer {
 
     /*
     * @Description: 获取类的属性
-    * @Author: huima
+    * @Author: hma
     * @Date: 2023/7/19 20:11
     * @Param: [cu]
     * @return: java.util.List<java.lang.StringBuilder>
     */
-    public static List<String> getFields(CompilationUnit cu){
+    private static List<String> getFields(CompilationUnit cu){
         List<String> result = new ArrayList<>();
         // 获取类的所有成员变量
         List<FieldDeclaration> fields = cu.findAll(FieldDeclaration.class);
@@ -97,12 +132,12 @@ public class ClassAnalyzer {
 
     /*
     * @Description: 获取压缩后的方法源代码
-    * @Author: huima
+    * @Author: hma
     * @Date: 2023/7/19 20:32
     * @Param: [cu]
     * @return: java.util.List<java.lang.String>
     */
-    public static List<String> getMethods(CompilationUnit cu){
+    private static List<String> getMethods(CompilationUnit cu){
         List<String> result = new ArrayList<>();
         // 获取方法名和方法内的所有语句
         List<MethodDeclaration> methods = cu.getTypes().get(0).getMethods();

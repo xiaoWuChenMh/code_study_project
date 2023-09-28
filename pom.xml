@@ -16,6 +16,7 @@
     <module>flink_study_project</module>
     <module>common_study_project</module>
     <module>small_toolbox_study_project</module>
+    <module>chatgpt-api</module>
   </modules>
 
   <name>code_study_project</name>
