@@ -23,7 +23,7 @@ public class ClassMethod {
     // 参数
     private List<String> params;
 
-    // 变量注释
+    // 注释
     private String comment;
 
     // 持有方法的有效代码
@@ -39,7 +39,7 @@ public class ClassMethod {
     public String getChatContent(String classPathName){
         StringBuilder str = new StringBuilder();
         str.append(classPathName);
-        str.append("方法名： ").append("\\r\\n");
+        str.append("方法： ").append("\\r\\n");
         str.append(comment).append("\\r\\n");
         str.append(code.replaceAll("\\s+", " ")).append("\\r\\n");
         return str.toString();

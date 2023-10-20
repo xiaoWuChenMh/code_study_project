@@ -3,13 +3,16 @@ package com.future.common.uitl
 import scala.meta._
 
 /**
-  * @Description
+  * @Description 当前使用的scala12版本无法兼容jdk11版本，导致当前代码无法执行
   * @Author hma
   * @Date 2023/8/24 20:41
   */
 object ScalaParser {
+
   def main(args: Array[String]): Unit = {
-    val code = scala.io.Source.fromFile("E:\\workspace\\IntelliJIDEA\\yuanma\\spark-source_code_read\\core\\src\\main\\scala\\org\\apache\\spark\\memory\\StaticMemoryManager.scala").mkString
+    val path = "E:\\workspace\\IntelliJIDEA\\yuanma\\spark-source_code_read\\core\\src\\main\\scala\\org\\apache\\spark\\storage\\BlockId.scala"
+
+    val code = scala.io.Source.fromFile(path).mkString
     val parsedCode  = code.parse[Source]
 
     parsedCode match {
@@ -64,4 +67,5 @@ object ScalaParser {
         println(s"Failed to parse code at ${pos.startLine}:${pos.startColumn}, error: $msg")
     }
   }
+
 }

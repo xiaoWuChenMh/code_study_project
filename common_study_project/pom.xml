@@ -23,7 +23,7 @@
     </properties>
 
     <dependencies>
-        <!--  =================== other start ====================-->
+        <!--  =================== other ====================-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -41,8 +41,8 @@
             <!--            <version>1.16.18</version>-->
             <version>1.18.4</version>
         </dependency>
-        <!--  =================== other end ====================-->
-        <!--  =================== http start ====================-->
+
+        <!--  =================== http ====================-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -53,26 +53,34 @@
             <artifactId>commons-httpclient</artifactId>
             <version>3.1</version>
         </dependency>
-        <!--  =================== http end ====================-->
-        <!--  =================== mysql start ====================-->
+
+        <!--  =================== mysql ====================-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.25</version>
         </dependency>
-        <!--  =================== mysql end ====================-->
+
         <!--  ===================Java语法分析库,用于解析源码====================-->
         <dependency>
             <groupId>com.github.javaparser</groupId>
             <artifactId>javaparser-core</artifactId>
             <version>3.24.0</version>
         </dependency>
+
         <!--  ===================Scala语法分析库,用于解析源码====================-->
         <dependency>
             <groupId>org.scalameta</groupId>
             <artifactId>scalameta_2.11</artifactId>
             <version>4.4.8</version>
         </dependency>
+        <!--  =================== Chat Api====================-->
+        <dependency>
+            <groupId>com.future</groupId>
+            <artifactId>chatgpt-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>

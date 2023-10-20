@@ -1,4 +1,4 @@
-package com.future.common.class_files;
+package com.future.common.class_files.chat;
 
 /**
  * @Description
@@ -26,9 +26,14 @@ public class ClassPrompt {
             "\t{\n" +
             "\t\t\"class_name\":告诉我类名是什么,\n" +
             "\t\t\"method_name\":告诉我方法名是什么,\n" +
-            "\t\t\"parameters\":告诉我方法中各个参数的含义,\n" +
+            "\t\t\"parameters\": [\n" +
+            "       {\n" +
+            "        \"param_name\": \"方法参数名称\",\n" +
+            "        \"param_type\": \"方法参数的类型\",\n" +
+            "        \"param_description\": \"描述该参数的含义\"\n" +
+            "       }\n" +
+            "    ],\n" +
             "\t\t\"method_effect\":方法在类中的作用是什么，\n" +
-            "\t\t\"method_effect_for_spark\":方法对spark来说有什么用，不要少于100字,\n" +
             "\t\t\"code_explain\":       [\n" +
             "\t\t\t{\n" +
             "\t\t\t\t\"code\"：一行代码,\n" +
@@ -41,5 +46,5 @@ public class ClassPrompt {
             "\t\t]\n" +
             "      \"summarize\":将上面的代码解释，按先后执行顺序，以通顺的逻辑写出一段总结描述\n" +
             "\t}\n" +
-            "—";
+            "—\n";
 }

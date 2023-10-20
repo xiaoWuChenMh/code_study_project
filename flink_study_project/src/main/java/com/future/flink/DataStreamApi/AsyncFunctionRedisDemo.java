@@ -22,14 +22,15 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import java.util.concurrent.TimeUnit;
 
 /**
- *  基于Redis的异步IO操作实例
+ *  基于Redis的异步IO操作实例(
  *     orderedWait（有序）：消息的发送顺序与接收到的顺序相同（包括 watermark ），也就是先进先出。
  *     unorderWait（无序）：
  *        在ProcessingTime中完全无序，即哪个请求先返回结果就先发送(最低延迟和最低消耗)
  *        在EventTime中，以watermark为边界，介于两个watermark之间的消息可以乱序，但是watermark和消息之间不能乱序，这样既认为在无序中又引入了有序，这样就有了与有序一样的开销。
  *     参考资料：
  *       1、https://blog.csdn.net/weixin_51329630/article/details/118657221
- *       2、https://zhuanlan.zhihu.com/p/268898593
+ *       2、https://zhuanlan.zhihu.com/p/26889859
+ *     ps： 不支持异步IO的redis
  */
 public class AsyncFunctionRedisDemo {
 

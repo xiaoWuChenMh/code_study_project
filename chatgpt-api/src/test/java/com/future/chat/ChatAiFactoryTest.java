@@ -13,11 +13,12 @@ public class ChatAiFactoryTest {
         String apiHost = "https://service-b6ohgcl8-1254280433.usw.apigw.tencentcs.com/release/";
         String apiKey = "";
         ChatAi chatAi =  ChatAiFactory.createChatAi(ChatModelType.GPT_3_5_TURBO,apiHost,apiKey,timeout);
+        String newContent = "NioBufferedFileInputStream方法名： \\r\\n\\r\\n@Override public synchronized long skip(long n) throws IOException { if (n <= 0L) { return 0L; } if (byteBuffer.remaining() >= n) { // The buffered content is enough to skip byteBuffer.position(byteBuffer.position() + (int) n); return n; } long skippedFromBuffer = byteBuffer.remaining(); long toSkipFromFileChannel = n - skippedFromBuffer; // Discard everything we have read in the buffer. byteBuffer.position(0); byteBuffer.flip(); return skippedFromBuffer + skipFromFileChannel(toSkipFromFileChannel); }\\r\\n\n";
 
         // 构建待传递给模型的信息
         String historyMessages = "[]";
         Map<String, String> result= chatAi.buildMessages(historyMessages
-                ,"类名：package org.apache.spark.memory.TaskMemoryManager；方法：/** * Release N bytes of execution memory for a MemoryConsumer. */ public void releaseExecutionMemory(long size, MemoryConsumer consumer) { logger.debug(\"Task {} release {} from {}\", taskAttemptId, Utils.bytesToString(size), consumer); memoryManager.releaseExecutionMemory(size, taskAttemptId, consumer.getMode()); }"
+                ,newContent
                 ,"你是spark源码贡献者，我需要你指导我阅读spark源代码。首先我会定义元的规则(每一个规则都以00编号开头)，必须保证每条元规则都得到执行\n" +
                         "001:你要以中文回答。\n" +
                         "002：我给你的代码中有双引号，需要你执行替换操作将双引号替换为（\\\\\\\\\\\"）\n" +
@@ -37,8 +38,14 @@ public class ChatAiFactoryTest {
                         "\t{\n" +
                         "\t\t\"class_name\":告诉我类名是什么,\n" +
                         "\t\t\"method_name\":告诉我方法名是什么,\n" +
+                        "\t\t\"parameters\": [\n" +
+                        "       {\n" +
+                        "        \"param_name\": \"方法参数名称\",\n" +
+                        "        \"param_type\": \"方法参数的类型\",\n" +
+                        "        \"param_description\": \"描述该参数的含义\"\n" +
+                        "       }\n" +
+                        "    ],\n" +
                         "\t\t\"method_effect\":方法在类中的作用是什么，\n" +
-                        "\t\t\"method_effect_for_spark\":方法对spark来说有什么用，不要少于100字,\n" +
                         "\t\t\"code_explain\":       [\n" +
                         "\t\t\t{\n" +
                         "\t\t\t\t\"code\"：一行代码,\n" +
@@ -49,9 +56,9 @@ public class ChatAiFactoryTest {
                         "\t\t\t\t\"作用\"：xxxxxxxxxxxxxxx\n" +
                         "\t\t\t}\n" +
                         "\t\t]\n" +
+                        "      \"summarize\":将上面的代码解释，按先后执行顺序，以通顺的逻辑写出一段150字内的总结描述\n" +
                         "\t}\n" +
-                        "—\n" +
-                        "最后，告诉我是否执行了00编号开头的规则，然后解释原因");
+                        "—\n");
         // 模型参数
         String modelPram = "{\"temperature\":\"0.7\",\"maxTokens\":\"2000\"}";
         // 发起会话

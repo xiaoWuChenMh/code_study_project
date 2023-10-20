@@ -32,7 +32,7 @@ public class ClassField {
    public String getChatContent(String classPathName){
       StringBuilder str = new StringBuilder();
       str.append(classPathName);
-      str.append("属性名： ").append("\\r\\n");
+      str.append("属性： ").append("\\r\\n");
       str.append(comment).append("\\r\\n");
       str.append(filedCode).append("\\r\\n");
       return str.toString();
